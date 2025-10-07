@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Google Accounts</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      min-width: 220px;
+      padding: 10px;
+    }
+    input, button {
+      margin: 4px 0;
+      width: 100%;
+    }
+    .account {
+      padding: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 3px;
+      background: #f1f1f1;
+    }
+    .account:hover {
+      background: #e2e2e2;
+    }
+  </style>
+</head>
+<body>
+  <h3>Google Accounts</h3>
+  <div id="list"></div>
+
+  <hr />
+  <input id="name" placeholder="Account name (e.g. Work)" />
+  <input id="index" type="number" min="0" max="9" placeholder="u/N index" />
+  <button id="add">Add Account</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
