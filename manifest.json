@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Google Forms Redirect",
+  "version": "1.0",
+  "description": "Automatically redirects Google Forms links to include /u/0/",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "*://docs.google.com/forms/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
