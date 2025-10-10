@@ -5,19 +5,26 @@ const indexInput = document.getElementById("index");
 
 // Load saved accounts
 function loadAccounts() {
-  browser.storage.local.get(["accounts", "activeIndex"]).then(res => {
+  browser.storage.local.get(["accounts", "activeIndex", "activeName"]).then(res => {
     list.innerHTML = "";
     const accounts = res.accounts || [];
-    const active = res.activeIndex ?? 0;
+    const activeIndex = res.activeIndex ?? 0;
 
     accounts.forEach(acc => {
       const div = document.createElement("div");
       div.className = "account";
       div.textContent = `${acc.name} (u/${acc.index})`;
-      if (acc.index === active) div.style.background = "#d0eaff";
+      if (acc.index === activeIndex) div.style.background = "#d0eaff";
       div.onclick = () => {
-        browser.runtime.sendMessage({ type: "setActiveIndex", index: acc.index });
-        browser.storage.local.set({ activeIndex: acc.index });
+        browser.runtime.sendMessage({
+          type: "setActiveAccount",
+          index: acc.index,
+          name: acc.name
+        });
+        browser.storage.local.set({
+          activeIndex: acc.index,
+          activeName: acc.name
+        });
         loadAccounts();
       };
       list.appendChild(div);

@@ -1,11 +1,20 @@
 let activeIndex = 0;
+let activeName = "Default";
 
-// Load saved active account index
-browser.storage.local.get("activeIndex").then(res => {
+// Load saved settings
+browser.storage.local.get(["activeIndex", "activeName"]).then(res => {
   if (res.activeIndex !== undefined) activeIndex = res.activeIndex;
+  if (res.activeName !== undefined) activeName = res.activeName;
+  updateTooltip();
 });
 
-// Listen for redirect
+function updateTooltip() {
+  browser.browserAction.setTitle({
+    title: `Active: ${activeName} (u/${activeIndex})`
+  });
+}
+
+// Redirect Google Forms URLs
 browser.webRequest.onBeforeRequest.addListener(
   details => {
     const oldPart = "/forms/d/e/";
@@ -19,10 +28,12 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-// Listen for popup messages (when user changes account)
+// Listen for messages from popup when user switches account
 browser.runtime.onMessage.addListener(message => {
-  if (message.type === "setActiveIndex") {
+  if (message.type === "setActiveAccount") {
     activeIndex = message.index;
-    browser.storage.local.set({ activeIndex });
+    activeName = message.name;
+    browser.storage.local.set({ activeIndex, activeName });
+    updateTooltip();
   }
 });
