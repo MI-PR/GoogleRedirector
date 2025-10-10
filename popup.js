@@ -25,6 +25,14 @@ function loadAccounts() {
           activeIndex: acc.index,
           activeName: acc.name
         });
+        
+        // Reload current tab if it's a Google Forms page
+        browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
+          if (tabs[0] && tabs[0].url.includes('docs.google.com/forms')) {
+            browser.tabs.reload(tabs[0].id);
+          }
+        });
+        
         loadAccounts();
       };
       list.appendChild(div);

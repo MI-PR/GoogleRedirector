@@ -14,9 +14,11 @@ This extension automatically intercepts Google Forms URLs and redirects them to 
 
 - **Multi-Account Support**: Manage multiple Google accounts with custom names
 - **Easy Account Switching**: Click on any account in the popup to make it active
+- **Automatic Page Reload**: When switching accounts on a Google Forms page, the page automatically reloads
 - **Visual Feedback**: See which account is currently active with highlighting
 - **Simple Setup**: Add accounts by providing a name and account index (u/0, u/1, u/2, etc.)
 - **Automatic Redirection**: All Google Forms links automatically use your selected account
+- **Smart Redirect Prevention**: Prevents infinite redirect loops when URLs already contain account information
 
 ## How it works
 
@@ -60,7 +62,8 @@ Where `[SELECTED_INDEX]` is the account you've chosen (0 for primary, 1 for seco
 1. Click the extension icon to open the popup
 2. Click on any account name to make it active
 3. The active account will be highlighted in blue
-4. All Google Forms links will now use the selected account
+4. **If you're currently on a Google Forms page, it will automatically reload with the new account**
+5. All future Google Forms links will use the selected account
 
 ### Finding Your Account Index
 Your Google account index corresponds to the order you signed in:
@@ -81,6 +84,7 @@ Your Google account index corresponds to the order you signed in:
 
 This extension requires:
 - `storage` - To save your account preferences and settings
+- `tabs` - To reload Google Forms pages when switching accounts
 - `webRequest` - To intercept and modify web requests
 - `webRequestBlocking` - To block and redirect requests
 - `*://docs.google.com/forms/*` - Access to Google Forms URLs only
@@ -91,7 +95,7 @@ This extension only intercepts and modifies Google Forms URLs. Your account name
 
 ## Version History
 
-- **v1.3** - Added multi-account support with popup interface
+- **v1.3** - Added multi-account support with popup interface, automatic page reload on account switch, and smart redirect loop prevention
 - **v1.0** - Initial release with basic u/0 redirection
 
 ## License

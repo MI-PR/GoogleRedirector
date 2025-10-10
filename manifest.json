@@ -5,6 +5,7 @@
   "description": "Redirect Google Forms links using the selected Google account index (u/N).",
   "permissions": [
     "storage",
+    "tabs",
     "webRequest",
     "webRequestBlocking",
     "*://docs.google.com/forms/*"

@@ -17,10 +17,25 @@ function updateTooltip() {
 // Redirect Google Forms URLs
 browser.webRequest.onBeforeRequest.addListener(
   details => {
+    const url = details.url;
+    
+    // Check if URL already has the correct account index
+    const currentAccountMatch = url.match(/\/forms\/u\/(\d+)\/d\/e\//);
+    if (currentAccountMatch) {
+      const currentIndex = parseInt(currentAccountMatch[1]);
+      // Skip if it's already the correct account
+      if (currentIndex === activeIndex) {
+        return;
+      }
+      // Replace with the active account index
+      const newUrl = url.replace(/\/forms\/u\/\d+\/d\/e\//, `/forms/u/${activeIndex}/d/e/`);
+      return { redirectUrl: newUrl };
+    }
+    
+    // Handle URLs without account index (add the active account)
     const oldPart = "/forms/d/e/";
-    const newPart = `/forms/u/${activeIndex}/d/e/`;
-    if (details.url.includes(oldPart)) {
-      const newUrl = details.url.replace(oldPart, newPart);
+    if (url.includes(oldPart)) {
+      const newUrl = url.replace(oldPart, `/forms/u/${activeIndex}/d/e/`);
       return { redirectUrl: newUrl };
     }
   },
